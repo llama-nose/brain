@@ -7,6 +7,7 @@ contact: edwinpan@cs.stanford.edu
 ```bash
 conda create -n lln-brain python=3.11
 conda activate lln-brain
+pip install -e .
 ```
 
 ### Setup AWS ECR and Lambda
@@ -25,6 +26,9 @@ aws iam create-role --role-name lln-ml-ex --profile lln-profile --assume-role-po
 This is a one-time setup. Make sure to verify the role name.
 ```bash
 aws iam attach-role-policy --role-name lln-ml-ex --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole --profile lln-profile
+```
+```bash
+aws iam put-role-policy --role-name lln-ml-ex --policy-name dmInvokePolicy --policy-document file://policies/dm-policy.json
 ```
 
 ### Build and push the Docker image to ECR
