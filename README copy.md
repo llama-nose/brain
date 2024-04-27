@@ -1,18 +1,13 @@
-# Llama Nose Brain Core
+# Llama Nose ML Core
 
 contact: edwinpan@cs.stanford.edu
 
 ## Installation
-0. Setup conda environment
-```bash
-conda create -n lln-brain python=3.11
-conda activate lln-brain
-```
 
 ### Setup AWS ECR and Lambda
 1. Create a new ECR repository. This is a one-time setup. Make sure to verify the region and repository name. 
 ```bash
-aws ecr create-repository --repository-name lln-brain --profile lln-profile --region us-east-2 --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
+aws ecr create-repository --repository-name lln-intelligence --profile lln-profile --region us-east-2 --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
 ```
 
 2. Create an execution role for the Lambda function. 
@@ -32,7 +27,7 @@ aws iam attach-role-policy --role-name lln-ml-ex --policy-arn arn:aws:iam::aws:p
 ```bash
 docker build \
   --build-arg GUARDRAILS_TOKEN=$(echo $GUARDRAILS_TOKEN) \
-  -t lln-brain:test .
+  -t lln-intelligence:test .
 ```
 
 5. Login to AWS ECR. We are in the `us-east-2` region. `158267493868` is the account number.
@@ -42,12 +37,12 @@ aws ecr get-login-password --region us-east-2 --profile lln-profile | docker log
 
 6. Tag the Docker image
 ```bash
-docker tag lln-brain:test 158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-brain:latest
+docker tag lln-intelligence:test 158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-intelligence:latest
 ```
 
-7. Push the Docker image to AWS ECR. Note that the image name is `lln-brain` and the tag is `latest`.
+7. Push the Docker image to AWS ECR. Note that the image name is `lln-intelligence` and the tag is `latest`.
 ```bash
-docker push 158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-brain:latest
+docker push 158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-intelligence:latest
 ```
 
 ### Setup the Lambda Function
@@ -56,10 +51,10 @@ This is a one-time setup. Make sure to verify the region, role, and function nam
 ```bash
 ``` bash
 aws lambda create-function \
-  --function-name llnBrainLambda \
+  --function-name llnIntelligenceLambda \
   --profile lln-profile \
   --package-type Image \
-  --code ImageUri=158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-brain:latest \
+  --code ImageUri=158267493868.dkr.ecr.us-east-2.amazonaws.com/lln-intelligence:latest \
   --role arn:aws:iam::158267493868:role/lln-ml-ex
 ```
 
@@ -67,7 +62,7 @@ aws lambda create-function \
 This is a one-time setup. Make sure to verify the region, role, and function name.
 ```bash
 aws lambda update-function-configuration \
-  --function-name llnBrainLambda \
+  --function-name llnIntelligenceLambda \
   --profile lln-profile \
   --package-type Image \
   --image-uri 158267493868.dkr.ecr.us-east-2.amazonaws.com/llama-nose-ml:latest
