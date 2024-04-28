@@ -14,7 +14,7 @@ PAYLOAD=$(cat "$1" | openssl base64)
 
 # Test the Lambda function
 aws lambda invoke \
-    --function-name llnIntelligenceLambda \
+    --function-name llnBrainLambda \
     --payload "$PAYLOAD" response.json \
     --profile lln-profile
 

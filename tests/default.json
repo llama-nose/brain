@@ -1,4 +1,5 @@
 {
-    "key1": "value1",
-    "key2": "value2"
+    "bucket": "llamanose",
+    "user_id": "000",
+    "session_id": "111"
 }

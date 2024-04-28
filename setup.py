@@ -1,7 +1,7 @@
 from setuptools import setup
 
 
-setup(name='lln-intelligence',
+setup(name='lln-brain',
       version='0.1',
       description='',
       author='Edwin Pan',
@@ -10,5 +10,6 @@ setup(name='lln-intelligence',
       packages=[],
       python_requires='>=3.11',
       install_requires=[
-          'boto3', 'requests', 'numpy', 'guardrails-ai'
+          'boto3', 'requests', 'numpy', 'guardrails-ai', 'openai', 'scipy', 
+          'scikit-learn', 'matplotlib', 'pandas'
       ])

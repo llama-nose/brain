@@ -1,6 +1,6 @@
 # Llama Nose Brain Core
 
-contact: edwinpan@cs.stanford.edu
+contact: edwinpan@cs.stanford.edu, joyangseph@gmail.com
 
 ## Installation
 0. Setup conda environment
@@ -36,6 +36,7 @@ aws iam put-role-policy --role-name lln-ml-ex --policy-name dmInvokePolicy --pol
 ```bash
 docker build \
   --build-arg GUARDRAILS_TOKEN=$(echo $GUARDRAILS_TOKEN) \
+  --platform linux/amd64 \
   -t lln-brain:test .
 ```
 
@@ -67,15 +68,14 @@ aws lambda create-function \
   --role arn:aws:iam::158267493868:role/lln-ml-ex
 ```
 
-<!-- 2. Update the Lambda function.
+2. Update the Lambda function.
 This is a one-time setup. Make sure to verify the region, role, and function name.
 ```bash
 aws lambda update-function-configuration \
   --function-name llnBrainLambda \
   --profile lln-profile \
-  --package-type Image \
-  --image-uri 158267493868.dkr.ecr.us-east-2.amazonaws.com/llama-nose-ml:latest
-``` -->
+  --timeout 120
+```
 
 ### Manual Deployment
 1. Run the update_lambda.sh script to update the Lambda function with the new Docker image. See UPDATE.md for more details.
